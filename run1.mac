@@ -1,0 +1,57 @@
+/random/setSeeds 122 223
+
+# set verbosities
+#/run/verbose 1
+#/event/verbose 2
+#/tracking/verbose 2
+
+###################### Instrument ######################
+#/detector/SetInstRotY -90 deg
+#/detector/SetFastOuter 20 cm
+
+###################### Source ######################
+/gps/source/intensity 1
+/gps/particle gamma
+/gps/pos/type Plane
+/gps/pos/shape Circle
+/gps/pos/centre 0. 0. 200. cm
+/gps/pos/radius 20. cm
+/gps/direction 0 0 -1
+#/gps/polarization 1. 0. 0. # 0 deg
+#/gps/polarization 1. 1. 0. # 45 deg
+#/gps/polarization 0. 1. 0. # 90 deg
+#/gps/ene/mono 80 keV
+/gps/ene/type Pow
+/gps/ene/min 32. keV
+/gps/ene/max 1. MeV
+/gps/ene/alpha -1.05
+
+###################### Background Downwards shooting hemisphere with energies between 5 keV and 1 MeV ######################
+#/gps/source/intensity 17
+#/gps/source/add 17
+#/gps/particle gamma
+#/gps/pos/type Surface
+#/gps/pos/shape Sphere
+#/gps/pos/centre 0. 0. 0. cm
+#/gps/pos/radius 50. cm
+#/gps/ang/type cos
+
+#/gps/ene/type Cdg
+#/gps/ene/min 5 keV
+#/gps/ene/max 1.0 MeV
+#/gps/ene/calculate
+
+#/gps/hist/type biaspt
+#/gps/hist/point 0. 0.
+#/gps/hist/point 0.5 1.
+#/gps/hist/point 1. 0.
+#/gps/hist/type biast
+#/gps/hist/point 0. 0.
+#/gps/hist/point 0.5 1.
+#/gps/hist/point 1. 0.0
+
+###################### Number of events to simulate ###################### 
+#/run/beamOn 3560000 #eq to 1s background
+/run/beamOn 197778
+#/run/beamOn 3362222
+#/run/beamOn 100000

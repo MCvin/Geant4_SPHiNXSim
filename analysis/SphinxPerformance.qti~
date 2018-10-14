@@ -1,0 +1,713 @@
+QtiPlot 0.9.8 project file
+<scripting-lang>	muParser
+<windows>	9
+<table>
+20to200keV	19	6	2013-10-19 20:18
+geometry	12	10	893	453	
+header	Energy (keV)[X]	Modulation factor[Y]	N 2hits[Y]	Effective area[Y]	Efficiency[Y]	MF * EffectiveArea[Y]
+ColWidth	100	100	100	122	178	142	
+<com>
+<col nr="0">
+col("Energy (keV)")*10+10
+</col>
+<col nr="1">
+-col("Modulation factor")
+</col>
+<col nr="3">
+col("N 2hits")/(10000000/1017.87602)
+</col>
+<col nr="4">
+col("Effective area")/744.7152
+</col>
+<col nr="5">
+col("Modulation factor")*col("Effective area")
+</col>
+</com>
+ColType	0;0/13	0;0/13	0;0/13	0;0/13	0;0/13	0;0/13
+ReadOnlyColumn	0	0	0	0	0	0
+HiddenColumn	0	0	0	0	0	0
+Comments							
+WindowLabel	/home/maxime/g4work/SPHiNX/analysis/20to200keV.txt	2
+<data>
+0	20	0.0839496	1170	0.11909149434	0.0001599154876119	0.009997683313245
+1	30	0.110426	94659	9.635112617718	0.01293798302723	1.063966945924
+2	40	0.143787	426715	43.43429658743	0.05832336521053	6.245287203417
+3	50	0.205091	790411	80.45404028442	0.1080332995545	16.50039957597
+4	60	0.258764	1101750	112.1444905035	0.1505870841679	29.01895694065
+5	70	0.266652	1304200	132.7513905284	0.1782579307209	35.39842378718
+6	80	0.269197	1426860	145.2366577897	0.1950230877384	39.09727256701
+7	90	0.26657	1491430	151.8090832509	0.203848509136	40.46774732219
+8	100	0.262713	1525730	155.3003979995	0.2085366298412	40.79943345964
+9	110	0.26069	1536320	156.3783287046	0.2099840700238	40.76626651
+10	120	0.259397	1530750	155.8113717615	0.2092227629589	40.41700240082
+11	130	0.258752	1515690	154.2784504754	0.2071643636056	39.91985761741
+12	140	0.25669	1487430	151.4019328429	0.2033017895202	38.86336214144
+13	150	0.256317	1454340	148.0337810927	0.1987790514987	37.94357466834
+14	160	0.254313	1412990	143.82486375	0.1931273374708	36.57653257485
+15	170	0.251727	1366910	139.1344910498	0.1868291274971	35.02390802849
+16	180	0.247665	1321070	134.4685473741	0.1805637207003	33.30315278541
+17	190	0.246643	1273560	129.6326184031	0.1740700584641	31.9729779008
+18	200	0.244859	1230350	125.2343761207	0.1681641198148	30.66476410254
+</data>
+</table>
+<table>
+0to90deg	19	8	2013-10-19 20:56
+geometry	0	725	1092	461	minimized	
+header	Off axis (deg)[X]	Modulation factor[Y]	N 2hits[Y]	Effective area[Y]	Efficiency[Y]	Fluence 400ph.cm-2[Y]	Fluence 200ph.cm-2[Y]	MF * EffectiveArea[Y]
+ColWidth	100	100	84	142	130	144	149	128	
+<com>
+<col nr="0">
+col("Off axis (deg)")*5-5
+</col>
+<col nr="3">
+col("N 2hits")/(10000000/1017.87602)
+</col>
+<col nr="4">
+col("Effective area")/744.7152
+</col>
+<col nr="5">
+100*4.29/(col("Modulation factor")*sqrt(400*col("Effective area")))
+</col>
+<col nr="6">
+100*4.29/(col("Modulation factor")*sqrt(200*col("Effective area")))
+</col>
+<col nr="7">
+col("Modulation factor")*col("Effective area")
+</col>
+</com>
+ColType	0;0/13	0;0/13	0;0/13	0;0/13	0;0/13	0;0/13	0;0/13	0;0/13
+ReadOnlyColumn	0	0	0	0	0	0	0	0
+HiddenColumn	0	0	0	0	0	0	0	0
+Comments									
+WindowLabel	/home/maxime/g4work/SPHiNX/analysis/0to90deg.txt	2
+<data>
+0	0	0.269889	1425380	145.0860121388	0.1948208014806	6.598258721444	9.331346971913	39.15711873013
+1	5	0.26863	1416550	144.1872276131	0.1936139179288	6.649812327561	9.404254780872	38.73301495371
+2	10	0.261373	1395630	142.0578309793	0.1907545743384	6.885476243258	9.737533886613	37.13008145655
+3	15	0.249746	1366140	139.0561145963	0.1867238839711	7.283392424713	10.30027234711	34.72870839597
+4	20	0.238216	1337140	136.1042741383	0.1827601667568	7.718279237276	10.91529517554	32.42221576813
+5	25	0.224953	1302420	132.5702085968	0.1780146404918	8.281567335527	11.71190484361	29.82206613448
+6	30	0.210166	1265760	128.8386751075	0.1730039552133	8.9916980175	12.71618128511	27.07750899264
+7	35	0.196248	1226200	124.8119575724	0.1675968982134	9.783493474201	13.8359491586	24.49409704967
+8	40	0.18555	1187290	120.8514019786	0.1622786831511	10.51575577873	14.87152444088	22.42397763713
+9	45	0.171688	1147420	116.7931302868	0.1568292553808	11.56055557168	16.34909447804	20.05197895268
+10	50	0.163074	1104270	112.4009952605	0.1509315175258	12.40673465872	17.54577241913	18.32967990111
+11	55	0.153108	1062090	108.1075942082	0.1451663591776	13.47414794741	19.05532276864	16.55213753403
+12	60	0.149864	1016210	103.4375790284	0.1388954851847	14.07313334775	19.90241604548	15.50156934351
+13	65	0.142323	969279	98.66058507896	0.1324809606128	15.17331114677	21.45830240987	14.04167045019
+14	70	0.138557	914766	93.11183753113	0.1250301290092	16.0433986943	22.68879202004	12.9012968728
+15	75	0.131603	858006	87.33437324161	0.1172721776615	17.44090044533	24.66515794979	11.49346552172
+16	80	0.127377	802377	81.67203072995	0.1096688112851	18.63372163204	26.35206184952	10.40313825829
+17	85	0.132959	744631	75.79420386486	0.1017760935521	18.53068862944	26.20635117986	10.07752155167
+18	90	0.128109	530377	53.98580298595	0.07249187741294	22.78808719906	32.22722197745	6.916067234727
+</data>
+</table>
+<multiLayer>
+MF-EFF_20to200keV	1	1	2013-10-19 20:40
+geometry	68	211	559	469	
+WindowLabel		2
+Margins	5	5	5	5
+Spacing	5	5
+LayerCanvasSize	400	300
+Alignement	0	0
+<AlignPolicy>0</AlignPolicy>
+<CommonAxes>0</CommonAxes>
+<graph>
+ggeometry	5	5	541	406
+<PageGeometry>0.00907441	0.0118765	0.981851	0.964371</PageGeometry>
+PlotTitle	 	#000000	4228
+<Antialiasing>0</Antialiasing>
+<Autoscaling>1</Autoscaling>
+<ScaleFonts>1</ScaleFonts>
+<GridOnTop>0</GridOnTop>
+<MissingDataGap>1</MissingDataGap>
+Background	#ffffff	0
+Margin	0
+Border	0	#000000
+grid	0	0	0	0	#0000ff	0	0.5	#a0a0a4	2	0.4	#0000ff	0	0.5	#a0a0a4	2	0.4	0	0	2	0	0
+EnabledAxes	1	1	1	1	
+AxesTitles	Energy (keV)	Fraction		%(?Y)	
+AxesTitleColors	#000000	#000000	#000000	#000000	
+AxesTitleAlignment	5124	5124	5124	5124
+AxesTitleDistance	2	2	2	2
+TitleFont	Ubuntu	13	75	0	0	0
+ScaleFont0	Ubuntu	11	75	0	0	0
+ScaleFont1	Ubuntu	11	75	0	0	0
+ScaleFont2	Ubuntu	11	75	0	0	0
+ScaleFont3	Ubuntu	11	75	0	0	0
+AxisFont0	Ubuntu	11	50	0	0	0
+AxisFont1	Ubuntu	11	50	0	0	0
+AxisFont2	Ubuntu	11	50	0	0	0
+AxisFont3	Ubuntu	11	50	0	0	0
+AxesColors	#000000	#000000	#000000	#000000
+AxesNumberColors	#333333	#333333	#333333	#333333
+AxesBaseline	0	0	0	0	
+CanvasBackground	#ffffff	0
+curve	20to200keV_Energy (keV)	20to200keV_Modulation factor	2	1	#000000	0	1	7	1	#000000	#000000	0	#000000	14	1	2	0	0	18	1
+curve	20to200keV_Energy (keV)	20to200keV_Efficiency	2	1	#ff0000	0	1	7	2	#ff0000	#ff0000	0	#000000	14	1	2	0	0	18	1
+scale	0	-0.05	0.3	0	8	5	0	0
+scale	1	-0.05	0.3	0	8	5	0	0
+scale	2	0	250	0	6	5	0	0
+scale	3	0	250	0	6	5	0	0
+LabelsFormat	0	6	0	6	0	6	0	6
+AxisType	0	0	0	0	
+MajorTicks	1	1	1	1
+MinorTicks	1	1	1	1
+TicksLength	5	9
+DrawAxesBackbone	1	1	1	1	1
+AxesLineWidth	1
+LabelsRotation	0	0	0	0
+LabelsPrefix				
+LabelsSuffix				
+TickLabelsSpace	4	4	4	4
+ShowTicksPolicy	0	0	0	0
+EnabledTickLabels	1	1	1	1
+<Legend>
+<Frame>1</Frame>
+<Color>#000000</Color>
+<FrameWidth>1</FrameWidth>
+<LineStyle>0</LineStyle>
+<x>107.7694235589</x>
+<y>0.081103678929766</y>
+<right>66.301703163017</right>
+<bottom>0.254040404040404</bottom>
+<attachTo>1</attachTo>
+<onTop>1</onTop>
+<visible>1</visible>
+<Text>
+\l(1)%(1)
+\l(2)%(2)
+</Text>
+<Font>Ubuntu	11	50	0	0	0</Font>
+<TextColor>#000000</TextColor>
+<Background>#ffffff</Background>
+<Alpha>0</Alpha>
+<Angle>0</Angle>
+<AutoUpdate>1</AutoUpdate>
+<TeXOutput>0</TeXOutput>
+</Legend>
+</graph>
+<LinkXAxes>0</LinkXAxes>
+<ScaleLayers>1</ScaleLayers>
+</multiLayer>
+<multiLayer>
+Area_20to200keV	1	1	2013-10-19 21:00
+geometry	677	141	535	469	active
+WindowLabel		2
+Margins	5	5	5	5
+Spacing	5	5
+LayerCanvasSize	400	300
+Alignement	0	0
+<AlignPolicy>0</AlignPolicy>
+<CommonAxes>0</CommonAxes>
+<graph>
+ggeometry	5	5	517	406
+<PageGeometry>0.00948767	0.0118765	0.981025	0.964371</PageGeometry>
+PlotTitle	 	#000000	4228
+<Antialiasing>0</Antialiasing>
+<Autoscaling>1</Autoscaling>
+<ScaleFonts>1</ScaleFonts>
+<GridOnTop>0</GridOnTop>
+<MissingDataGap>1</MissingDataGap>
+Background	#ffffff	0
+Margin	0
+Border	0	#000000
+grid	0	0	0	0	#0000ff	0	0.5	#a0a0a4	2	0.4	#0000ff	0	0.5	#a0a0a4	2	0.4	0	0	2	0	0
+EnabledAxes	1	1	1	1	
+AxesTitles	Energy (keV)	Effective area (cm2)		%(?Y)	
+AxesTitleColors	#000000	#000000	#000000	#000000	
+AxesTitleAlignment	5124	5124	5124	5124
+AxesTitleDistance	2	2	2	2
+TitleFont	Ubuntu	13	75	0	0	0
+ScaleFont0	Ubuntu	11	75	0	0	0
+ScaleFont1	Ubuntu	11	75	0	0	0
+ScaleFont2	Ubuntu	11	75	0	0	0
+ScaleFont3	Ubuntu	11	75	0	0	0
+AxisFont0	Ubuntu	11	50	0	0	0
+AxisFont1	Ubuntu	11	50	0	0	0
+AxisFont2	Ubuntu	11	50	0	0	0
+AxisFont3	Ubuntu	11	50	0	0	0
+AxesColors	#000000	#000000	#000000	#000000
+AxesNumberColors	#333333	#333333	#333333	#333333
+AxesBaseline	0	0	0	0	
+CanvasBackground	#ffffff	0
+curve	20to200keV_Energy (keV)	20to200keV_Effective area	2	1	#000000	0	1	7	1	#000000	#000000	0	#000000	14	1	2	0	0	18	1
+scale	0	-20	160	0	10	5	0	0
+scale	1	-20	160	0	10	5	0	0
+scale	2	0	250	0	6	5	0	0
+scale	3	0	250	0	6	5	0	0
+LabelsFormat	0	6	0	6	0	6	0	6
+AxisType	0	0	0	0	
+MajorTicks	1	1	1	1
+MinorTicks	1	1	1	1
+TicksLength	5	9
+DrawAxesBackbone	1	1	1	1	1
+AxesLineWidth	1
+LabelsRotation	0	0	0	0
+LabelsPrefix				
+LabelsSuffix				
+TickLabelsSpace	4	4	4	4
+ShowTicksPolicy	0	0	0	0
+EnabledTickLabels	1	1	1	1
+<Legend>
+<Frame>1</Frame>
+<Color>#000000</Color>
+<FrameWidth>1</FrameWidth>
+<LineStyle>0</LineStyle>
+<x>109.64912280702</x>
+<y>68.494983277592</y>
+<right>70.4134366925065</right>
+<bottom>136.363636363636</bottom>
+<attachTo>1</attachTo>
+<onTop>1</onTop>
+<visible>1</visible>
+<Text>
+\l(1)%(1)
+</Text>
+<Font>Ubuntu	11	50	0	0	0</Font>
+<TextColor>#000000</TextColor>
+<Background>#ffffff</Background>
+<Alpha>0</Alpha>
+<Angle>0</Angle>
+<AutoUpdate>1</AutoUpdate>
+<TeXOutput>0</TeXOutput>
+</Legend>
+</graph>
+<LinkXAxes>0</LinkXAxes>
+<ScaleLayers>1</ScaleLayers>
+</multiLayer>
+<multiLayer>
+MF-EFF_0to90deg	1	1	2013-10-19 21:07
+geometry	1327	18	541	469	
+WindowLabel		2
+Margins	5	5	5	5
+Spacing	5	5
+LayerCanvasSize	400	300
+Alignement	0	0
+<AlignPolicy>0</AlignPolicy>
+<CommonAxes>0</CommonAxes>
+<graph>
+ggeometry	5	5	523	406
+<PageGeometry>0.00938086	0.0118765	0.981238	0.964371</PageGeometry>
+PlotTitle	 	#000000	4228
+<Antialiasing>0</Antialiasing>
+<Autoscaling>1</Autoscaling>
+<ScaleFonts>1</ScaleFonts>
+<GridOnTop>0</GridOnTop>
+<MissingDataGap>1</MissingDataGap>
+Background	#ffffff	0
+Margin	0
+Border	0	#000000
+grid	0	0	0	0	#0000ff	0	0.5	#a0a0a4	2	0.4	#0000ff	0	0.5	#a0a0a4	2	0.4	0	0	2	0	0
+EnabledAxes	1	1	1	1	
+AxesTitles	Off axis (deg)	Fraction		%(?Y)	
+AxesTitleColors	#000000	#000000	#000000	#000000	
+AxesTitleAlignment	5124	5124	5124	5124
+AxesTitleDistance	2	2	2	2
+TitleFont	Ubuntu	13	75	0	0	0
+ScaleFont0	Ubuntu	11	75	0	0	0
+ScaleFont1	Ubuntu	11	75	0	0	0
+ScaleFont2	Ubuntu	11	75	0	0	0
+ScaleFont3	Ubuntu	11	75	0	0	0
+AxisFont0	Ubuntu	11	50	0	0	0
+AxisFont1	Ubuntu	11	50	0	0	0
+AxisFont2	Ubuntu	11	50	0	0	0
+AxisFont3	Ubuntu	11	50	0	0	0
+AxesColors	#000000	#000000	#000000	#000000
+AxesNumberColors	#333333	#333333	#333333	#333333
+AxesBaseline	0	0	0	0	
+CanvasBackground	#ffffff	0
+curve	0to90deg_Off axis (deg)	0to90deg_Modulation factor	2	1	#000000	0	1	7	1	#000000	#000000	0	#000000	14	1	2	0	0	18	1
+curve	0to90deg_Off axis (deg)	0to90deg_Efficiency	2	1	#ff0000	0	1	7	2	#ff0000	#ff0000	0	#000000	14	1	2	0	0	18	1
+scale	0	0.05	0.3	0	6	5	0	0
+scale	1	0.05	0.3	0	6	5	0	0
+scale	2	0	95	10	11	5	0	0
+scale	3	0	95	10	11	5	0	0
+LabelsFormat	0	6	0	6	0	6	0	6
+AxisType	0	0	0	0	
+MajorTicks	1	1	1	1
+MinorTicks	1	1	1	1
+TicksLength	5	9
+DrawAxesBackbone	1	1	1	1	1
+AxesLineWidth	1
+LabelsRotation	0	0	0	0
+LabelsPrefix				
+LabelsSuffix				
+TickLabelsSpace	4	4	4	4
+ShowTicksPolicy	0	0	0	0
+EnabledTickLabels	1	1	1	1
+<Legend>
+<Frame>1</Frame>
+<Color>#000000</Color>
+<FrameWidth>1</FrameWidth>
+<LineStyle>0</LineStyle>
+<x>35.037593984962</x>
+<y>0.26488294314381</y>
+<right>26.3486005089059</right>
+<bottom>0.267171717171717</bottom>
+<attachTo>1</attachTo>
+<onTop>1</onTop>
+<visible>1</visible>
+<Text>
+\l(1)%(1)
+\l(2)%(2)
+</Text>
+<Font>Ubuntu	11	50	0	0	0</Font>
+<TextColor>#000000</TextColor>
+<Background>#ffffff</Background>
+<Alpha>0</Alpha>
+<Angle>0</Angle>
+<AutoUpdate>1</AutoUpdate>
+<TeXOutput>0</TeXOutput>
+</Legend>
+</graph>
+<LinkXAxes>0</LinkXAxes>
+<ScaleLayers>1</ScaleLayers>
+</multiLayer>
+<multiLayer>
+Area_0to90deg	1	1	2013-10-19 21:11
+geometry	1430	126	535	469	
+WindowLabel		2
+Margins	5	5	5	5
+Spacing	5	5
+LayerCanvasSize	400	300
+Alignement	0	0
+<AlignPolicy>0</AlignPolicy>
+<CommonAxes>0</CommonAxes>
+<graph>
+ggeometry	5	5	517	406
+<PageGeometry>0.00948767	0.0118765	0.981025	0.964371</PageGeometry>
+PlotTitle	 	#000000	4228
+<Antialiasing>0</Antialiasing>
+<Autoscaling>1</Autoscaling>
+<ScaleFonts>1</ScaleFonts>
+<GridOnTop>0</GridOnTop>
+<MissingDataGap>1</MissingDataGap>
+Background	#ffffff	0
+Margin	0
+Border	0	#000000
+grid	0	0	0	0	#0000ff	0	0.5	#a0a0a4	2	0.4	#0000ff	0	0.5	#a0a0a4	2	0.4	0	0	2	0	0
+EnabledAxes	1	1	1	1	
+AxesTitles	Off axis (deg)	Effective area (cm2)		%(?Y)	
+AxesTitleColors	#000000	#000000	#000000	#000000	
+AxesTitleAlignment	5124	5124	5124	5124
+AxesTitleDistance	2	2	2	2
+TitleFont	Ubuntu	13	75	0	0	0
+ScaleFont0	Ubuntu	11	75	0	0	0
+ScaleFont1	Ubuntu	11	75	0	0	0
+ScaleFont2	Ubuntu	11	75	0	0	0
+ScaleFont3	Ubuntu	11	75	0	0	0
+AxisFont0	Ubuntu	11	50	0	0	0
+AxisFont1	Ubuntu	11	50	0	0	0
+AxisFont2	Ubuntu	11	50	0	0	0
+AxisFont3	Ubuntu	11	50	0	0	0
+AxesColors	#000000	#000000	#000000	#000000
+AxesNumberColors	#333333	#333333	#333333	#333333
+AxesBaseline	0	0	0	0	
+CanvasBackground	#ffffff	0
+curve	0to90deg_Off axis (deg)	0to90deg_Effective area	2	1	#000000	0	1	7	1	#000000	#000000	0	#000000	14	1	2	0	0	18	1
+scale	0	40	160	0	7	5	0	0
+scale	1	40	160	0	7	5	0	0
+scale	2	0	95	10	11	5	0	0
+scale	3	0	95	10	11	5	0	0
+LabelsFormat	0	6	0	6	0	6	0	6
+AxisType	0	0	0	0	
+MajorTicks	1	1	1	1
+MinorTicks	1	1	1	1
+TicksLength	5	9
+DrawAxesBackbone	1	1	1	1	1
+AxesLineWidth	1
+LabelsRotation	0	0	0	0
+LabelsPrefix				
+LabelsSuffix				
+TickLabelsSpace	4	4	4	4
+ShowTicksPolicy	0	0	0	0
+EnabledTickLabels	1	1	1	1
+<Legend>
+<Frame>1</Frame>
+<Color>#000000</Color>
+<FrameWidth>1</FrameWidth>
+<LineStyle>0</LineStyle>
+<x>46.666666666667</x>
+<y>140.73578595318</y>
+<right>26.7571059431525</right>
+<bottom>144.242424242424</bottom>
+<attachTo>1</attachTo>
+<onTop>1</onTop>
+<visible>1</visible>
+<Text>
+\l(1)%(1)
+</Text>
+<Font>Ubuntu	11	50	0	0	0</Font>
+<TextColor>#000000</TextColor>
+<Background>#ffffff</Background>
+<Alpha>0</Alpha>
+<Angle>0</Angle>
+<AutoUpdate>1</AutoUpdate>
+<TeXOutput>0</TeXOutput>
+</Legend>
+</graph>
+<LinkXAxes>0</LinkXAxes>
+<ScaleLayers>1</ScaleLayers>
+</multiLayer>
+<multiLayer>
+MDP_0to90deg	1	1	2013-10-19 21:38
+geometry	1094	17	541	469	
+WindowLabel		2
+Margins	5	5	5	5
+Spacing	5	5
+LayerCanvasSize	400	300
+Alignement	0	0
+<AlignPolicy>0</AlignPolicy>
+<CommonAxes>0</CommonAxes>
+<graph>
+ggeometry	5	5	523	406
+<PageGeometry>0.00938086	0.0118765	0.981238	0.964371</PageGeometry>
+PlotTitle	 	#000000	4228
+<Antialiasing>0</Antialiasing>
+<Autoscaling>1</Autoscaling>
+<ScaleFonts>1</ScaleFonts>
+<GridOnTop>0</GridOnTop>
+<MissingDataGap>1</MissingDataGap>
+Background	#ffffff	0
+Margin	0
+Border	0	#000000
+grid	0	0	0	0	#0000ff	0	0.5	#a0a0a4	2	0.4	#0000ff	0	0.5	#a0a0a4	2	0.4	0	0	2	0	0
+EnabledAxes	1	1	1	1	
+AxesTitles	Off axis (deg)	MPD (%)		%(?Y)	
+AxesTitleColors	#000000	#000000	#000000	#000000	
+AxesTitleAlignment	5124	5124	5124	5124
+AxesTitleDistance	2	2	2	2
+TitleFont	Ubuntu	13	75	0	0	0
+ScaleFont0	Ubuntu	11	75	0	0	0
+ScaleFont1	Ubuntu	11	75	0	0	0
+ScaleFont2	Ubuntu	11	75	0	0	0
+ScaleFont3	Ubuntu	11	75	0	0	0
+AxisFont0	Ubuntu	11	50	0	0	0
+AxisFont1	Ubuntu	11	50	0	0	0
+AxisFont2	Ubuntu	11	50	0	0	0
+AxisFont3	Ubuntu	11	50	0	0	0
+AxesColors	#000000	#000000	#000000	#000000
+AxesNumberColors	#333333	#333333	#333333	#333333
+AxesBaseline	0	0	0	0	
+CanvasBackground	#ffffff	0
+curve	0to90deg_Off axis (deg)	0to90deg_Fluence 400ph.cm-2	2	1	#000000	0	1	7	1	#000000	#000000	0	#000000	14	1	2	0	0	18	1
+curve	0to90deg_Off axis (deg)	0to90deg_Fluence 200ph.cm-2	2	1	#ff0000	0	1	7	2	#ff0000	#ff0000	0	#000000	14	1	2	0	0	18	1
+scale	0	5	35	0	7	5	0	0
+scale	1	5	35	0	7	5	0	0
+scale	2	0	95	10	11	5	0	0
+scale	3	0	95	10	11	5	0	0
+LabelsFormat	0	6	0	6	0	6	0	6
+AxisType	0	0	0	0	
+MajorTicks	1	1	1	1
+MinorTicks	1	1	1	1
+TicksLength	5	9
+DrawAxesBackbone	1	1	1	1	1
+AxesLineWidth	1
+LabelsRotation	0	0	0	0
+LabelsPrefix				
+LabelsSuffix				
+TickLabelsSpace	4	4	4	4
+ShowTicksPolicy	0	0	0	0
+EnabledTickLabels	1	1	1	1
+<Legend>
+<Frame>1</Frame>
+<Color>#000000</Color>
+<FrameWidth>1</FrameWidth>
+<LineStyle>0</LineStyle>
+<x>11.45390070922</x>
+<y>30.384615384615</y>
+<right>26.3486005089059</right>
+<bottom>31.0606060606061</bottom>
+<attachTo>1</attachTo>
+<onTop>1</onTop>
+<visible>1</visible>
+<Text>
+\l(1)%(1)
+\l(2)%(2)
+</Text>
+<Font>Ubuntu	11	50	0	0	0</Font>
+<TextColor>#000000</TextColor>
+<Background>#ffffff</Background>
+<Alpha>0</Alpha>
+<Angle>0</Angle>
+<AutoUpdate>1</AutoUpdate>
+<TeXOutput>0</TeXOutput>
+</Legend>
+</graph>
+<LinkXAxes>0</LinkXAxes>
+<ScaleLayers>1</ScaleLayers>
+</multiLayer>
+<multiLayer>
+Graph1	1	1	2014-01-08 15:12
+geometry	1274	270	517	469	
+WindowLabel		2
+Margins	5	5	5	5
+Spacing	5	5
+LayerCanvasSize	400	300
+Alignement	0	0
+<AlignPolicy>0</AlignPolicy>
+<CommonAxes>0</CommonAxes>
+<graph>
+ggeometry	5	5	499	406
+<PageGeometry>0.00982318	0.0118765	0.980354	0.964371</PageGeometry>
+PlotTitle	Title	#000000	4228
+<Antialiasing>0</Antialiasing>
+<Autoscaling>1</Autoscaling>
+<ScaleFonts>1</ScaleFonts>
+<GridOnTop>0</GridOnTop>
+<MissingDataGap>1</MissingDataGap>
+Background	#ffffff	0
+Margin	0
+Border	0	#000000
+grid	0	0	0	0	#0000ff	0	0.5	#a0a0a4	2	0.4	#0000ff	0	0.5	#a0a0a4	2	0.4	0	0	2	0	0
+EnabledAxes	1	1	1	1	
+AxesTitles	Off axis (deg)	%(?Y)		%(?Y)	
+AxesTitleColors	#000000	#000000	#000000	#000000	
+AxesTitleAlignment	5124	5124	5124	5124
+AxesTitleDistance	2	2	2	2
+TitleFont	Ubuntu	13	75	0	0	0
+ScaleFont0	Ubuntu	11	75	0	0	0
+ScaleFont1	Ubuntu	11	75	0	0	0
+ScaleFont2	Ubuntu	11	75	0	0	0
+ScaleFont3	Ubuntu	11	75	0	0	0
+AxisFont0	Ubuntu	11	50	0	0	0
+AxisFont1	Ubuntu	11	50	0	0	0
+AxisFont2	Ubuntu	11	50	0	0	0
+AxisFont3	Ubuntu	11	50	0	0	0
+AxesColors	#000000	#000000	#000000	#000000
+AxesNumberColors	#333333	#333333	#333333	#333333
+AxesBaseline	0	0	0	0	
+CanvasBackground	#ffffff	0
+curve	0to90deg_Off axis (deg)	0to90deg_MF * EffectiveArea	2	1	#000000	0	1	7	1	#000000	#000000	0	#000000	14	1	2	0	0	18	1
+scale	0	5	40	0	8	5	0	0
+scale	1	5	40	0	8	5	0	0
+scale	2	0	95	10	11	5	0	0
+scale	3	0	95	10	11	5	0	0
+LabelsFormat	0	6	0	6	0	6	0	6
+AxisType	0	0	0	0	
+MajorTicks	1	1	1	1
+MinorTicks	1	1	1	1
+TicksLength	5	9
+DrawAxesBackbone	1	1	1	1	1
+AxesLineWidth	1
+LabelsRotation	0	0	0	0
+LabelsPrefix				
+LabelsSuffix				
+TickLabelsSpace	4	4	4	4
+ShowTicksPolicy	0	0	0	0
+EnabledTickLabels	1	1	1	1
+<Legend>
+<Frame>1</Frame>
+<Color>#000000</Color>
+<FrameWidth>1</FrameWidth>
+<LineStyle>0</LineStyle>
+<x>43.809523809524</x>
+<y>32.625418060201</y>
+<right>90.4761904761905</right>
+<bottom>29.3478260869565</bottom>
+<attachTo>1</attachTo>
+<onTop>1</onTop>
+<visible>1</visible>
+<Text>
+\l(1)%(1)
+</Text>
+<Font>Ubuntu	11	50	0	0	0</Font>
+<TextColor>#000000</TextColor>
+<Background>#ffffff</Background>
+<Alpha>0</Alpha>
+<Angle>0</Angle>
+<AutoUpdate>1</AutoUpdate>
+<TeXOutput>0</TeXOutput>
+</Legend>
+</graph>
+<LinkXAxes>0</LinkXAxes>
+<ScaleLayers>1</ScaleLayers>
+</multiLayer>
+<multiLayer>
+Graph2	1	1	2014-01-10 18:00
+geometry	1077	197	533	469	
+WindowLabel		2
+Margins	5	5	5	5
+Spacing	5	5
+LayerCanvasSize	400	300
+Alignement	0	0
+<AlignPolicy>0</AlignPolicy>
+<CommonAxes>0</CommonAxes>
+<graph>
+ggeometry	5	5	515	406
+<PageGeometry>0.00952381	0.0118765	0.980952	0.964371</PageGeometry>
+PlotTitle		#000000	4228
+<Antialiasing>0</Antialiasing>
+<Autoscaling>1</Autoscaling>
+<ScaleFonts>1</ScaleFonts>
+<GridOnTop>0</GridOnTop>
+<MissingDataGap>1</MissingDataGap>
+Background	#ffffff	0
+Margin	0
+Border	0	#000000
+grid	0	0	0	0	#0000ff	0	0.5	#a0a0a4	2	0.4	#0000ff	0	0.5	#a0a0a4	2	0.4	0	0	2	0	0
+EnabledAxes	1	1	1	1	
+AxesTitles	Energy (keV)	FOM			
+AxesTitleColors	#000000	#000000	#000000	#000000	
+AxesTitleAlignment	5124	5124	5124	5124
+AxesTitleDistance	2	2	2	2
+TitleFont	Ubuntu	13	75	0	0	0
+ScaleFont0	Ubuntu	11	75	0	0	0
+ScaleFont1	Ubuntu	11	75	0	0	0
+ScaleFont2	Ubuntu	11	75	0	0	0
+ScaleFont3	Ubuntu	11	75	0	0	0
+AxisFont0	Ubuntu	11	50	0	0	0
+AxisFont1	Ubuntu	11	50	0	0	0
+AxisFont2	Ubuntu	11	50	0	0	0
+AxisFont3	Ubuntu	11	50	0	0	0
+AxesColors	#000000	#000000	#000000	#000000
+AxesNumberColors	#333333	#333333	#333333	#333333
+AxesBaseline	0	0	0	0	
+CanvasBackground	#ffffff	0
+curve	20to200keV_Energy (keV)	20to200keV_MF * EffectiveArea	2	1	#000000	0	1	7	1	#000000	#000000	0	#000000	14	1	2	0	0	18	1
+scale	0	-10	50	0	7	5	0	0
+scale	1	-10	50	0	7	5	0	0
+scale	2	0	250	0	6	5	0	0
+scale	3	0	250	0	6	5	0	0
+LabelsFormat	0	6	0	6	0	6	0	6
+AxisType	0	0	0	0	
+MajorTicks	1	1	1	1
+MinorTicks	1	1	1	1
+TicksLength	5	9
+DrawAxesBackbone	1	1	1	1	1
+AxesLineWidth	1
+LabelsRotation	0	0	0	0
+LabelsPrefix				
+LabelsSuffix				
+TickLabelsSpace	4	4	4	4
+ShowTicksPolicy	0	0	0	0
+EnabledTickLabels	1	1	1	1
+<Legend>
+<Frame>1</Frame>
+<Color>#000000</Color>
+<FrameWidth>1</FrameWidth>
+<LineStyle>0</LineStyle>
+<x>95.864661654135</x>
+<y>21.705685618729</y>
+<right>218.671679197995</right>
+<bottom>16.0869565217391</bottom>
+<attachTo>1</attachTo>
+<onTop>1</onTop>
+<visible>1</visible>
+<Text>
+\l(1)%(1)
+</Text>
+<Font>Ubuntu	11	50	0	0	0</Font>
+<TextColor>#000000</TextColor>
+<Background>#ffffff</Background>
+<Alpha>0</Alpha>
+<Angle>0</Angle>
+<AutoUpdate>1</AutoUpdate>
+<TeXOutput>0</TeXOutput>
+</Legend>
+</graph>
+<LinkXAxes>0</LinkXAxes>
+<ScaleLayers>1</ScaleLayers>
+</multiLayer>
+<open>1</open>

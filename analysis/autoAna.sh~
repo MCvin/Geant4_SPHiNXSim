@@ -1,0 +1,14 @@
+#!/bin/sh
+
+#for cpu in $(seq  1 1 8); do 
+#    for seed in $(seq  0 1 20); do 
+#	./G4dataAnalysis ../Pola0degSeeds/G4data$cpu-$seed.root | grep 'MF' >> 0degSeed.txt
+#    done
+#done
+
+for ang in $(seq  0 1 90); do 
+    ./G4dataAnalysis NP0-90deg/G4dataNP$ang.root | grep 'MF' >> 0-90deg.txt
+    #mv M2hitsNP.root NP0-90deg/M2hitsNP$ang.root
+done
+
+exit 0

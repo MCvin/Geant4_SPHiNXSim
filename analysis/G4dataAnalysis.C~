@@ -1,0 +1,354 @@
+#define G4data_cxx
+#include "G4data.h"
+#include <TH2.h>
+#include <TStyle.h>
+#include <TCanvas.h>
+#include <TMath.h>
+#include <TRandom3.h>
+
+
+float hitThreshold = 10;
+float trigThreshold = 300;
+float upperD = 2800;
+float nPhE_keV[7];   // number of photo-electrons per keV per unit
+float nADC_PhE[7];   // number of ADC channels per photo-electrons per unit
+float detpos[37][2]; // position of the detector units (plastic and CsI)
+float Angle[37][37]; // angle between 2 detector units (0deg is x, 90deg is -y)
+
+void G4dataAnalysis()
+{
+  // read the characteristics of the PDCs from ascii files
+  ReadCalibrationParameters();
+
+  // compute and print the angle matrix to a file
+  //printAngleMatrix();
+
+  // create histograms
+  // nhits spectrum
+  TH1F* Sn = new TH1F("Sn", "Recorded particle energy", 120, 0, 120);
+  //TH1F* Sn = new TH1F("Sn", "Recorded particle energy", 128, 0, 4960);
+  Sn->GetXaxis()->SetTitle("Energy (keV)");
+  //Sn->GetXaxis()->SetTitle("ADC channel");
+  Sn->GetYaxis()->SetTitle("Events/bin");
+  Sn->GetXaxis()->CenterTitle();
+  Sn->GetYaxis()->CenterTitle();
+  // nhits distribution
+  TH1F* Dn = new TH1F("Dn", "N hits distribution", 38, -0.5, 37.5);
+  Dn->GetXaxis()->SetTitle("Detector id");
+  Dn->GetYaxis()->SetTitle("Events/detector");
+  Dn->GetXaxis()->CenterTitle();
+  Dn->GetYaxis()->CenterTitle();
+  // 1hit spectrum
+  TH1F* S1 = (TH1F*)Sn->Clone("S1");
+  S1->SetTitle("Recorded particle energy, 1hit events");
+  // 1hit distribution
+  TH1F* D1 = (TH1F*)Dn->Clone("D1");
+  D1->SetTitle("1 hit event distribution");
+  // 2hits distribution
+  TH1F* D2T = (TH1F*)Dn->Clone("D2T");
+  D2T->SetTitle("2 hits event distribution");
+  TH1F* D2P = (TH1F*)D2T->Clone("D2P");
+  TH1F* D2C = (TH1F*)D2T->Clone("D2C");
+  // 2hits angle distribution
+  TH1F* A2 = new TH1F("A2", "2 hits angular distribution", 6, 0, 360);
+  A2->GetXaxis()->SetTitle("Angle (deg)");
+  //A2->GetYaxis()->SetTitle("Events/bin");
+  A2->GetXaxis()->CenterTitle();
+  //A2->GetYaxis()->CenterTitle();
+
+  // create an object to contain the Tree.
+  //  the class G4data has been automatically generated with makeclass.C
+  G4data* d = new G4data;
+  if (d->fChain == 0) return;
+
+  // get the total number of entries
+  Long64_t n = d->fChain->GetEntriesFast();
+  Long64_t nbytes = 0, nb = 0;
+
+  // loop over all entries in the tree
+  for (Long64_t j = 0; j < n; j++) {
+    Long64_t i = d->LoadTree(j);
+    if (i < 0) break;
+    // gets nb bytes and load the data for TTree entry number "j"
+    nb = d->fChain->GetEntry(j); nbytes += nb;
+
+    if (d->Plastic_EdepTot > 0) {
+      // energy conversion: keV to ADC
+      EnergyConversion_keV2ADC(d);
+
+      // events selection
+      bool validEvent = EventsSelection(d);
+
+      if (validEvent) {
+	// energy reconstruction: ADC to keV
+	EnergyReconstruction_ADC2keV(d);
+
+	// Nhits
+	fillnhits(d, Sn, Dn);
+
+	// 1hit
+      	fill1hit(d, S1, D1);
+
+	// 2hits
+	fill2hits(d, D2T, D2P, D2C, A2);
+      }
+    }
+  }
+  // modulation curve
+  //Defining the fitting function
+  //Function name f1, function, x_start, x_stop
+  TF1* f1 = new TF1("f1", "[0]*(1+[1]*sin(2*3.1415/180.0*(x-[2])))", -10,370);
+  //f1->SetParameter(1, 0.3);
+  //f1->SetParLimits(1, 0.0, 1.0);
+  //Fitting the curve
+  A2->Fit("f1", "R");
+  cout << "MF " << f1->GetParameter(1) << " N2hits " << A2->GetEntries() << endl;
+
+  // print nHits
+  TCanvas* c1 = new TCanvas("c1","c1");
+  c1->SetGrid();
+  c1->SetLogy();
+  Sn->Draw("histe");
+  TCanvas* c2 = new TCanvas("c2","c2");
+  c2->SetGrid();
+  c2->SetLogy();
+  Dn->Draw("histe");
+  // print 1Hit
+  TCanvas* c3 = new TCanvas("c3","c3");
+  c3->SetGrid();
+  c3->SetLogy();
+  S1->Draw("histe");
+  TCanvas* c4 = new TCanvas("c4","c4");
+  c4->SetGrid();
+  c4->SetLogy();
+  D1->Draw("histe");
+  // print 2Hits
+  TCanvas* c5 = new TCanvas("c5","c5");
+  c5->SetGrid();
+  c5->SetLogy();
+  D2T->Draw("histe");
+  D2P->SetLineColor(kGreen);
+  D2P->Draw("same");
+  D2C->SetLineColor(kRed);
+  D2C->Draw("same");
+  leg5 = new TLegend(0.45, 0.6, 0.85, 0.75);
+  leg5->AddEntry(D2T, "Total hits in plastic scintillators", "l");
+  leg5->AddEntry(D2P, "Photo hits (Emax) in plastic scintillators", "l");
+  leg5->AddEntry(D2C, "Compton hits (2nd Emax) in plastic scintillators", "l");
+  leg5->Draw();
+  TCanvas* c6 = new TCanvas("c6","c6");
+  c6->SetGrid();
+  A2->Draw();
+  f1->Draw("same");
+}
+
+void ReadCalibrationParameters()
+{
+  std::ifstream lightyield("Plastic_LightYields.dat");
+  std::ifstream pmtgain("PMT_gains.dat");
+  std::ifstream detpositions("det_positions.dat");
+  std::ifstream angmatrix("angles_matrix.dat");
+  for (int x = 0; x < 7; x++) {
+    lightyield >> nPhE_keV[x];
+    pmtgain >> nADC_PhE[x];
+  }
+  for (int i = 0; i < 37; i++) {
+    detpositions >> detpos[i][0] >> detpos[i][1];
+    for (int j = 0; j < 37; j++) {
+      angmatrix >> Angle[i][j];
+    }
+  }
+  lightyield.close();
+  pmtgain.close();
+  detpositions.close();
+  angmatrix.close();
+}
+
+void EnergyConversion_keV2ADC(G4data* d)
+{
+  TRandom3 random(0);   // "TRandom3 is the best random engine in ROOT. 0 means seed from system clock."
+
+  for (int x = 0; x < 30; x++) {
+    if (d->Plastic_Edep[x] > 0) {
+      float E = d->Plastic_Edep[x];
+      // correction for scintillator non-linearity response
+        // slow scintillator
+        // fast scintillator
+        E = E * (1.001 - 0.486 * exp(-0.0902 * E));
+	// bottom BGO
+
+      // correction for scintillator position dependance (need to output everything from G4)
+        // slow scintillator
+        // fast scintillator
+        // bottom BGO
+
+      // correction for PMT photon-electron production (low energy cutoff)
+        // slow scintillator
+        // fast scintillator
+        int nPhE = random.Poisson(E * nPhE_keV[x]);
+        // bottom BGO
+
+      // correction for PMT gain fluctuation
+	// slow scintillator
+
+	// fast scintillator
+	int ADC = random.Gaus(nPhE, 0.35*sqrt(nPhE)) * nADC_PhE[x];
+	// bottom BGO
+
+      d->Plastic_Edep[x] = ADC;
+    }
+  }
+}
+
+bool EventsSelection(G4data* d)
+{
+  bool valid = true;
+  for (int x = 0; x < 30; x++) {
+    // trigger threshold and upper discrimator
+    if ((d->Plastic_Edep[x] > trigThreshold) && (d->Plastic_Edep[x] < upperD)) valid = true;
+    // hit threshold
+    //if (d->Plastic_Edep[x] < 5) d->Plastic_Edep[x] = 0;
+    if (d->CsI_Edep[x] < 1) d->CsI_Edep[x] = 0;
+  }
+  // update the number of hitten units
+  d->Plastic_nHitUnits = 0;
+  d->CsI_nHitUnits = 0;
+  for (int x = 0; x < 30; x++) {
+    if (d->Plastic_Edep[x] > 0) d->Plastic_nHitUnits += 1;
+    if (d->CsI_Edep[x] > 0) d->CsI_nHitUnits += 1;
+  }
+
+  return valid;
+}
+
+void EnergyReconstruction_ADC2keV(G4data* d)
+{
+  for (int x = 0; x < 30; x++) {
+    if (d->Plastic_Edep[x] > 0) {
+      int ADC = d->Plastic_Edep[x];
+      // ADC to keV
+        // slow scintillator
+        // fast scintillator
+        float E = ADC / nADC_PhE[x] / nPhE_keV[x];
+	// bottom BGO
+
+      // correction for scintillator non-linearity response
+        // slow scintillator
+	// fast scintillator
+	E = E / (1.001 - 0.486 * exp(-0.0902 * E)); // not exactly correct
+	// bottom BGO
+
+      d->Plastic_Edep[x] = E;
+    }
+  }
+}
+
+void fillnhits(G4data* d, TH1F* Sn, TH1F* Dn)
+{
+  // Central unit spectrum
+  if (d->Plastic_Edep[0] > 0) Sn->Fill(d->Plastic_Edep[0]);
+  if (d->CsI_Edep[0] > 0) Sn->Fill(d->CsI_Edep[0]);
+
+  // Distribution
+  for (int x = 0; x < 30; x++) {
+    if (d->Plastic_Edep[x] > 0) Dn->Fill(x);
+    if (d->CsI_Edep[x] > 0) Dn->Fill(x+8);
+  }
+}
+
+void fill1hit(G4data* d, TH1F* S1, TH1F* D1)
+{
+  if ((d->Plastic_nHitUnits + d->CsI_nHitUnits) == 1) {
+    // Central unit spectrum
+    if (d->Plastic_Edep[0] > 0) S1->Fill(d->Plastic_Edep[0]);
+
+    // Distribution
+    for (int x = 0; x < 30; x++) {
+      if (d->Plastic_Edep[x] > 0) D1->Fill(x);
+      if (d->CsI_Edep[x] > 0) D1->Fill(x+8);
+    }
+  }
+}
+
+void fill2hits(G4data* d, TH1F* D2T, TH1F* D2P, TH1F* D2C, TH1F* A2)
+{
+  int h1 = -1;
+  int h2 = -1;
+  float E1 = -1;
+  float E2 = -1;
+  if ((d->Plastic_nHitUnits + d->CsI_nHitUnits) == 2) {
+    // Distribution
+      // Total energy
+      for (int x = 0; x < 30; x++) {
+	if (d->Plastic_Edep[x] > 0) {
+	  D2T->Fill(x);
+	  if (h1 == -1) {h1 = x; E1 = d->Plastic_Edep[x];}
+	  else if (h2 == -1) {h2 = x; E2 = d->Plastic_Edep[x];}
+	}
+	if (d->CsI_Edep[x] > 0) {
+	  D2T->Fill(x+8);
+	  if (h1 == -1) {h1 = x+7; E1 = d->CsI_Edep[x];}
+	  else if (h2 == -1) {h2 = x+7; E2 = d->CsI_Edep[x];}
+	}
+      }
+
+      // Photopeak
+      int pP = TMath::LocMax(30, d->Plastic_Edep);
+      int pC = TMath::LocMax(30, d->CsI_Edep);
+      if (d->Plastic_Edep[pP] > d->Plastic_Edep[pC]) {
+	D2P->Fill(pP);
+	pC = -1;
+      }
+      else {
+	D2P->Fill(pC+8);
+	pP = -1;
+      }
+
+      // Compton
+      for (int x = 0; x < 30; x++) {
+	if ((d->Plastic_Edep[x] > 0) && (x != pP)) D2C->Fill(x);
+	if ((d->CsI_Edep[x] > 0) && (x != pC)) D2C->Fill(x+8);
+      }
+    // Angular distribution [0]*(1+[1]*cos(2*3.1415/180.0*(x-[2])))
+      if (E1 < E2) {
+	if (h1 < 7) A2->Fill(Angle[h1][h2]); // plastic to CsI
+	//A2->Fill(Angle[h1][h2]);
+      }
+      else {
+	if (h2 < 7) A2->Fill(Angle[h2][h1]); // plastic to CsI
+	//A2->Fill(Angle[h2][h1]);
+      }
+  }
+}
+
+void printAngleMatrix()
+{
+  // compute angles between detector units
+  float theta;
+  float deltaX, deltaY;
+  for (int i = 0; i < 37; i++) {
+    for (int j = i+1; j < 37; j++) {
+      deltaX = detpos[j][0]-detpos[i][0];
+      deltaY = detpos[j][1]-detpos[i][1];
+      theta = std::acos(deltaX/std::sqrt(deltaX*deltaX+deltaY*deltaY))*180/std::acos(-1.0);
+      if(deltaY > 0){ //Vector pointing towards y
+	Angle[i][j] = 360 - theta;
+      }
+      else{ //Vector pointing towards -y
+	Angle[i][j] = theta;
+      }
+      if (Angle[i][j] < 180) Angle[j][i] = Angle[i][j] + 180;
+      else Angle[j][i] = Angle[i][j] - 180;
+    }
+  }
+
+  // print angles to a file
+  std::ofstream Amatrix("angles_matrix.dat");
+  for (int i = 0; i < 37; i++) {
+    for (int j = 0; j < 37; j++) {
+      Amatrix << Angle[i][j] << " ";
+    }
+    Amatrix << endl;
+  }
+  Amatrix.close();
+}

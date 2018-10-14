@@ -1,0 +1,14 @@
+/vis/open OGL 1000x400-0+0
+#/vis/open VRML2FILE
+/vis/drawVolume
+#/vis/viewer/flush
+
+#/vis/viewer/set/viewpointThetaPhi 90 0
+#/vis/viewer/addCutawayPlane 0 0 0
+#/vis/viewer/set/targetPoint 0 0 50 cm
+#/vis/viewer/zoomTo 8
+
+# to output info on the volumes
+#/vis/ASCIITree/verbose 5
+#/vis/ASCIITree/set/outFile toto
+#/vis/drawTree

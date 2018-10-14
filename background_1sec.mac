@@ -1,0 +1,51 @@
+/random/setSeeds 122 223
+###################### Background average photon+positron flux at 500 km orbit ######################
+
+/gps/source/intensity 1000
+
+/gps/particle e+
+/gps/pos/type Surface
+/gps/pos/shape Sphere
+/gps/pos/centre 0. 0. 0. cm
+/gps/pos/radius 50. cm
+/gps/ang/type cos
+
+/gps/ene/type Pow
+/gps/ene/min 40 keV
+/gps/ene/max 10.0 MeV
+/gps/ene/alpha -1.70
+
+/process/em/fluo true
+/process/em/auger true
+/process/em/pixe true
+
+
+/gps/source/add 2778
+
+/gps/particle gamma
+/gps/pos/type Surface
+/gps/pos/shape Sphere
+/gps/pos/centre 0. 0. 0. cm
+/gps/pos/radius 50. cm
+/gps/ang/type cos
+
+/gps/ene/type Cdg
+/gps/ene/min 5 keV
+/gps/ene/max 1.0 MeV
+/gps/ene/calculate
+
+/gps/hist/type biaspt
+/gps/hist/point 0. 0.
+/gps/hist/point 0.5 1.
+/gps/hist/point 1. 0.
+/gps/hist/type biast
+/gps/hist/point 0. 0.
+/gps/hist/point 0.5 1.
+/gps/hist/point 1. 0.0
+
+/process/em/fluo true
+/process/em/auger true
+/process/em/pixe true
+
+###################### Number of events to simulate ######################
+/run/beamOn 1740800 #eq to 1s background
